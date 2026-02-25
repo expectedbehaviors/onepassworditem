@@ -3,10 +3,10 @@ entries:
   onepassworditem:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2026-02-25T08:46:55.764239295Z"
+    created: "2026-02-25T08:50:49.600159298Z"
     description: 1Password items as Kubernetes Secrets. Fork with simplified schema
       and namespace from release (see README). Original by vquie.
-    digest: 4837764ec9854a4dcdbe2d7a8f6219a31cfd109d6ad24ed0ec2f9e9c44724a3f
+    digest: 1302563fe38e2d1553ae72be1a3fc6a9b37eb61483e0cb27dd98c9343005e3f1
     keywords:
     - 1password
     - secrets
@@ -22,4 +22,4 @@ entries:
     urls:
     - https://expectedbehaviors.github.io/OnePasswordItem-helm/onepassworditem-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-25T08:46:55.763789455Z"
+generated: "2026-02-25T08:50:49.599725668Z"
