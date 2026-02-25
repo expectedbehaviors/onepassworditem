@@ -22,25 +22,4 @@ entries:
     urls:
     - https://expectedbehaviors.github.io/OnePasswordItem-helm/onepassworditem-1.0.0.tgz
     version: 1.0.0
-  - apiVersion: v2
-    appVersion: 0.1.1
-    created: "2026-02-25T08:54:33.629991038Z"
-    description: 1Password items as Kubernetes Secrets. Fork with simplified schema
-      and namespace from release (see README). Original by vquie.
-    digest: 1302563fe38e2d1553ae72be1a3fc6a9b37eb61483e0cb27dd98c9343005e3f1
-    keywords:
-    - 1password
-    - secrets
-    - kubernetes
-    maintainers:
-    - name: expectedbehaviors
-      url: https://github.com/expectedbehaviors
-    name: onepassworditem
-    sources:
-    - https://github.com/expectedbehaviors/OnePasswordItem-helm
-    - https://github.com/vquie/OnePasswordItem-helm
-    type: application
-    urls:
-    - https://expectedbehaviors.github.io/OnePasswordItem-helm/onepassworditem-0.1.1.tgz
-    version: 0.1.1
-generated: "2026-02-25T08:54:33.629481747Z"
+generated: "2026-02-25T09:00:00.000000000Z"
