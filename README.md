@@ -32,6 +32,7 @@ Each entry in `items`:
 | `vault`           | string | no*      | Vault (id or title) for this entry. Falls back to top-level `defaultVault` if unset. *Required when `item` is not a full path unless `defaultVault` is set. |
 | `item`            | string | yes      | Item (id or title), or **full path** `vaults/<vault>/items/<item>` (backward compatible). If not a full path, path is built from `vault` or `defaultVault` + `item`. |
 | `name`            | string | no       | Name of the Kubernetes Secret to create. Defaults to `item` (or the last path segment of `item` when `item` is a full path). |
+| `namespace`       | string | no       | Kubernetes namespace for this OnePasswordItem/Secret. Defaults to the Helm release namespace (`.Release.Namespace`). Override when the chart is adopted in a way that needs secrets in another namespace. |
 | `type`            | string | no       | Kubernetes Secret type (default `Opaque`). |
 | `annotations`     | map    | no       | Annotations to apply to the Secret (post-install hook). |
 | `labels`          | map    | no       | Labels to apply to the Secret (post-install hook). |
@@ -52,8 +53,10 @@ items:
   - vault: AnotherVault
     item: other-secret
     name: other-secret
+  - item: cross-ns-secret
+    namespace: other-namespace   # optional; default is release namespace
 ```
-(When `name` is omitted, the Secret name defaults to the item id/title, or the last segment of a full path.)
+(When `name` is omitted, the Secret name defaults to the item id/title, or the last segment of a full path. Use `namespace` per entry to create the Secret in a different namespace.)
 
 Path is built as `vaults/<vault>/items/<item>` where `vault` is the entry's `vault` or the top-level `defaultVault`. You must provide either `defaultVault` or each entry's `vault` when `item` is not a full path.
 

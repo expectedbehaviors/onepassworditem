@@ -1,4 +1,4 @@
-# Simplified schema: namespace is always the Helm release namespace (.Release.Namespace).
+# Simplified schema: namespace defaults to the Helm release namespace (.Release.Namespace); optional per-entry namespace override.
 # When enabled is false, no OnePasswordItem resources are created.
 _helm_publish:
   image:
@@ -18,6 +18,7 @@ items: []
 #   - vault: AnotherVault
 #     item: other-secret
 #     name: other-secret
+#     namespace: other-namespace   # optional; default is release namespace
 #     annotations:
 #       replicator.v1.mittwald.de/replication-allowed: "true"
 #     labels: {}
