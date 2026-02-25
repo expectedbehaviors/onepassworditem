@@ -15,13 +15,13 @@ Helm chart to sync [1Password](https://1password.com/) items into Kubernetes Sec
 ## Prerequisites
 
 - [1Password Kubernetes Operator](https://github.com/1Password/onepassword-operator) installed and configured.
-- Items and vaults exist in 1Password; paths use the form `vaults/<vault_id_or_title>/items/<item_id_or_title>`.
+- Items and vaults exist in 1Password. Paths use the form `vaults/<vault>/items/<item>`. **Vault and item** can be 1Password **ID or exact title** (name).
 
 ## Values
 
 | Key            | Type    | Default | Description |
 |----------------|--------|--------|-------------|
-| `defaultVault` | string | `""`   | Optional. Default vault (id or title) used when an item does not set `vault` and `item` is not a full path. Enables short form: `item: "myapp"` → `vaults/<defaultVault>/items/myapp`. |
+| `defaultVault` | string | `""`   | Default vault (id or title). Used when an entry does not set `vault`. You must set either `defaultVault` or each entry's `vault` unless the entry uses a full path in `item`. |
 | `enabled`      | bool   | `true` | If `false`, no OnePasswordItem resources are rendered. |
 | `items`        | list   | `[]`   | List of 1Password items to sync. See below. |
 
@@ -29,18 +29,35 @@ Each entry in `items`:
 
 | Key               | Type   | Required | Description |
 |-------------------|--------|----------|-------------|
-| `item`            | string | yes      | Either a **full path** (`vaults/<vault>/items/<item>`) or the **item part only** (e.g. `myapp`). If not a full path, the path is built from `vault` or `defaultVault` + `item`. |
-| `vault`           | string | no       | Vault (id or title) for this item. Used only when `item` is not a full path. Falls back to top-level `defaultVault` if unset. |
-| `name`            | string | yes      | Name of the Kubernetes Secret to create. |
+| `vault`           | string | no*      | Vault (id or title) for this entry. Falls back to top-level `defaultVault` if unset. *Required when `item` is not a full path unless `defaultVault` is set. |
+| `item`            | string | yes      | Item (id or title), or **full path** `vaults/<vault>/items/<item>` (backward compatible). If not a full path, path is built from `vault` or `defaultVault` + `item`. |
+| `name`            | string | no       | Name of the Kubernetes Secret to create. Defaults to `item` (or the last path segment of `item` when `item` is a full path). |
 | `type`            | string | no       | Kubernetes Secret type (default `Opaque`). |
 | `annotations`     | map    | no       | Annotations to apply to the Secret (post-install hook). |
 | `labels`          | map    | no       | Labels to apply to the Secret (post-install hook). |
+
+**Template validation:** Each entry must have `item`. When `item` is not a full path (`vaults/.../items/...`), the chart requires either the entry's `vault` or the top-level `defaultVault`; otherwise the template will fail with an error.
 
 ## Secret annotations and labels
 
 If you need the Secret to be annotated or labeled (e.g. for [kubernetes-replicator](https://github.com/mittwald/kubernetes-replicator)), add **`annotations`** and/or **`labels`** to any item in **`items`**. A post-install/upgrade Helm hook (Job + RBAC) patches the Secret after the operator creates it. No hook is created if no item has `annotations` or `labels`.
 
-**Full path (backward compatible):**
+**Vault + item (recommended):** Set `defaultVault` and use short `item` names; override `vault` per entry if needed. Vault and item accept **ID or exact title**.
+
+```yaml
+defaultVault: Kubernetes
+items:
+  - item: myapp
+    type: Opaque
+  - vault: AnotherVault
+    item: other-secret
+    name: other-secret
+```
+(When `name` is omitted, the Secret name defaults to the item id/title, or the last segment of a full path.)
+
+Path is built as `vaults/<vault>/items/<item>` where `vault` is the entry's `vault` or the top-level `defaultVault`. You must provide either `defaultVault` or each entry's `vault` when `item` is not a full path.
+
+**Full path (backward compatible):** You may still use a full path in `item`:
 
 ```yaml
 items:
@@ -49,28 +66,12 @@ items:
     type: Opaque
 ```
 
-**Vault + item (good for autofill / default vault):**
-
-```yaml
-defaultVault: Kubernetes
-items:
-  - item: myapp
-    name: myapp
-    type: Opaque
-  - vault: AnotherVault
-    item: other-secret
-    name: other-secret
-```
-
-When `item` does not start with `vaults/`, the path is built as `vaults/<vault>/items/<item>` where `vault` is the entry's `vault` or, if unset, the top-level `defaultVault`. This lets you set a default vault once and only specify the item (and optional per-item vault override).
-
 Example with annotations (e.g. for kubernetes-replicator):
 
 ```yaml
 defaultVault: Kubernetes
 items:
   - item: myapp
-    name: myapp
     type: Opaque
     annotations:
       replicator.v1.mittwald.de/replication-allowed: "true"
@@ -92,7 +93,7 @@ In your chart's `Chart.yaml`:
 ```yaml
 dependencies:
   - name: onepassworditem
-    version: "1.0.0"
+    version: "1.1.0"
     repository: https://expectedbehaviors.github.io/OnePasswordItem-helm
 ```
 

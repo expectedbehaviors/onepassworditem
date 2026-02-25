@@ -4,24 +4,20 @@ _helm_publish:
   image:
     tag: ""
 
-# Optional: default vault (id or title) used when an item does not specify vault and item is not a full path.
-# Enables short form: item: "myapp" with defaultVault: "Kubernetes" -> vaults/Kubernetes/items/myapp
+# Default vault (id or title) used when an entry does not set vault. Required unless every entry sets vault or uses a full item path.
+# Vault and item accept 1Password vault/item ID or exact title.
 defaultVault: ""
 
 enabled: true
 items: []
-# Example (full path, backward compatible):
-# items:
-#   - item: vaults/Kubernetes/items/myapp
-#     name: myapp
-#     type: Opaque
-# Example (vault + item; uses defaultVault if vault omitted):
+# Example (vault + item; name defaults to item when omitted):
 # defaultVault: Kubernetes
 # items:
-#   - vault: Kubernetes   # optional; falls back to defaultVault
-#     item: myapp
-#     name: myapp
+#   - item: myapp
 #     type: Opaque
+#   - vault: AnotherVault
+#     item: other-secret
+#     name: other-secret
 #     annotations:
 #       replicator.v1.mittwald.de/replication-allowed: "true"
 #     labels: {}
