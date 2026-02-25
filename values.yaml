@@ -1,0 +1,27 @@
+# Simplified schema: namespace is always the Helm release namespace (.Release.Namespace).
+# When enabled is false, no OnePasswordItem resources are created.
+_helm_publish:
+  image:
+    tag: ""
+
+# Optional: default vault (id or title) used when an item does not specify vault and item is not a full path.
+# Enables short form: item: "myapp" with defaultVault: "Kubernetes" -> vaults/Kubernetes/items/myapp
+defaultVault: ""
+
+enabled: true
+items: []
+# Example (full path, backward compatible):
+# items:
+#   - item: vaults/Kubernetes/items/myapp
+#     name: myapp
+#     type: Opaque
+# Example (vault + item; uses defaultVault if vault omitted):
+# defaultVault: Kubernetes
+# items:
+#   - vault: Kubernetes   # optional; falls back to defaultVault
+#     item: myapp
+#     name: myapp
+#     type: Opaque
+#     annotations:
+#       replicator.v1.mittwald.de/replication-allowed: "true"
+#     labels: {}
