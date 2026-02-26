@@ -2,8 +2,29 @@ apiVersion: v1
 entries:
   onepassworditem:
   - apiVersion: v2
+    appVersion: 1.1.2
+    created: "2026-02-26T05:15:46.05366871Z"
+    description: 1Password items as Kubernetes Secrets. Fork with simplified schema
+      and namespace from release (see README). Original by vquie.
+    digest: 939739b63cc87fb78dff36815ac4d776bfc108e8165d29d81b77b63a1f6c82bb
+    keywords:
+    - 1password
+    - secrets
+    - kubernetes
+    maintainers:
+    - name: expectedbehaviors
+      url: https://github.com/expectedbehaviors
+    name: onepassworditem
+    sources:
+    - https://github.com/expectedbehaviors/OnePasswordItem-helm
+    - https://github.com/vquie/OnePasswordItem-helm
+    type: application
+    urls:
+    - https://expectedbehaviors.github.io/OnePasswordItem-helm/onepassworditem-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
     appVersion: 1.1.1
-    created: "2026-02-25T18:06:57.615589483Z"
+    created: "2026-02-26T05:15:46.05332719Z"
     description: 1Password items as Kubernetes Secrets. Fork with simplified schema
       and namespace from release (see README). Original by vquie.
     digest: 52645d8c09addc0725c037130553ebf7243c436e177431f0d23b502207c3f886
@@ -24,7 +45,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2026-02-25T18:06:57.615260414Z"
+    created: "2026-02-26T05:15:46.052988763Z"
     description: 1Password items as Kubernetes Secrets. Fork with simplified schema
       and namespace from release (see README). Original by vquie.
     digest: 518de648187d056dd8f473764b8c8fb9fb2b899129279e1a5ff799f64a8d3073
@@ -45,7 +66,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-02-25T18:06:57.614918802Z"
+    created: "2026-02-26T05:15:46.05266555Z"
     description: 1Password items as Kubernetes Secrets. Fork with simplified schema
       and namespace from release (see README). Original by vquie.
     digest: e59d4ff2f2ba8c359840910313f9f6d95e51d9a32ebc46c6bac6eca4ba1d27af
@@ -64,4 +85,4 @@ entries:
     urls:
     - https://expectedbehaviors.github.io/OnePasswordItem-helm/onepassworditem-1.0.0.tgz
     version: 1.0.0
-generated: "2026-02-25T18:06:57.614452856Z"
+generated: "2026-02-26T05:15:46.052166678Z"
